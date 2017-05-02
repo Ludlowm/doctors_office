@@ -17,4 +17,14 @@ describe Doctors_office do
 
   end
 
+  describe Doctors_office::Patient do
+
+    describe 'Doctors_office::Patient.add' do
+      it 'Adds a new patient to the database' do
+        expect(Doctors_office::Patient.add('Jane Doe', 6, 5039904423)[0]["id"]).to match(UUID_MATCHER)
+      end
+    end
+
+  end
+
 end
