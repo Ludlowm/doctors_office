@@ -32,6 +32,14 @@ describe Doctors_office do
       end
     end
 
+    describe 'Doctors_office::Patient.delete' do
+      it 'deletes a patient from the database' do
+        id = Doctors_office::Patient.add('Jane Doe', 23, 5039997788).getvalue(0, 0)
+        result = Doctors_office::Patient.delete(id)
+        expect(result.result_status).to eq(PG::PGRES_COMMAND_OK)
+      end
+    end
+
   end
 
 end
