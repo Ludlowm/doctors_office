@@ -23,6 +23,10 @@ module Doctors_office
       DB.exec("SELECT * FROM doctors WHERE #{field} = '#{value}' ORDER BY name DESC;").to_a
     end
 
+    def self.all
+      DB.exec("SELECT * FROM doctors;")
+    end
+
     def self.patients(doctor_name)
       doctor_id = Doctors_office::Doctor.find_by("name", doctor_name)[0]["id"]
       DB.exec("SELECT name FROM patients WHERE doctor_id = '#{doctor_id}'").to_a
@@ -41,6 +45,10 @@ module Doctors_office
 
     def self.clear_db
       DB.exec("DELETE FROM patients *;")
+    end
+
+    def self.all
+      DB.exec("SELECT * FROM patients;")
     end
 
     def self.add_doctor(patient_name, doctor_name)

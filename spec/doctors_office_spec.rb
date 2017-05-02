@@ -19,6 +19,8 @@ describe Doctors_office do
       it 'finds a doctor matching the given parameters' do
         Doctors_office::Doctor.clear_db
         id = Doctors_office::Doctor.add('John Doe', 'Brain Surgeon').getvalue(0, 0)
+        Doctors_office::Doctor.add('John Toad', 'Brain Surgeon').getvalue(0, 0)
+        Doctors_office::Doctor.add('John Dog', 'Brain Surgeon').getvalue(0, 0)
         expect(result = Doctors_office::Doctor.find_by('id', id)).to be_a(Array)
         expect(result = Doctors_office::Doctor.find_by('name', 'name')).to be_a(Array)
         expect(result = Doctors_office::Doctor.find_by('type', 'type')).to be_a(Array)

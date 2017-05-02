@@ -1,0 +1,17 @@
+
+<h2><%= @patient[0]["name"] %></h2>
+<h3><%= @patient[0]["birthday"] %></h3>
+<h3><%= @patient[0]["phone"] %></h3>
+
+
+<% if  @patient[0]["doctor_id"] == nil%>
+<h2>Add Doctor:</h2>
+<ul>
+  <% Doctors_office::Doctor.all.to_a.each do |doctor| %>
+      <%= "<li><a href='/doctors/#{doctor['id']}'>#{doctor['name']}</a></li>" %>
+   <% end %>
+</ul>
+<% end %>
+
+
+<a href="/" class="btn btn-success" id="back">Back</a>
