@@ -22,6 +22,12 @@ module Doctors_office
     def self.find_by(field, value)
       DB.exec("SELECT * FROM doctors WHERE #{field} = '#{value}' ORDER BY name DESC;").to_a
     end
+
+    def self.patients(doctor_name)
+      doctor_id = Doctors_office::Doctor.find_by("name", doctor_name)[0]["id"]
+      DB.exec("SELECT name FROM patients WHERE doctor_id = '#{doctor_id}'").to_a
+    end
+
   end
 
   class Patient

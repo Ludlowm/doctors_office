@@ -32,6 +32,20 @@ describe Doctors_office do
         expect(result.result_status).to eq(PG::PGRES_COMMAND_OK)
       end
     end
+
+    describe 'Doctors_office::Doctor.patients' do
+      it 'returns patient records for a specified doctor' do
+        Doctors_office::Doctor.add('John Doe', 'Brain Surgeon').getvalue(0, 0)
+        Doctors_office::Patient.add('Jane Doe', Time.now, 5033338877).getvalue(0, 0)
+        Doctors_office::Patient.add('Jullie Doe', Time.now, 5033338872).getvalue(0, 0)
+        Doctors_office::Patient.add('Paul Doe', Time.now, 5033338822).getvalue(0, 0)
+        Doctors_office::Patient.add_doctor("Jane Doe", "John Doe")
+        Doctors_office::Patient.add_doctor("Jullie Doe", "John Doe")
+        Doctors_office::Patient.add_doctor("Paul Doe", "John Doe")
+        expect(Doctors_office::Doctor.patients("John Doe")).to be_a(Array)
+      end
+    end
+
   end
 
   describe Doctors_office::Patient do
