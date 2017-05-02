@@ -7,6 +7,10 @@ module Doctors_office
   DB = PG.connect({:dbname => 'doctors_office'})
   class Doctor
 
+    def self.clear_db
+      DB.exec("DELETE FROM doctors *;")
+    end
+
     def self.add(name, type)
       DB.exec("INSERT INTO doctors VALUES (uuid_generate_v4(), '#{name}', '#{type}') RETURNING id;")
     end
@@ -15,7 +19,9 @@ module Doctors_office
       DB.exec("DELETE FROM doctors WHERE id ='#{id}';")
     end
 
-
+    def self.findBy(field, value)
+      DB.exec("SELECT * FROM doctors WHERE #{field} = '#{value}' ORDER BY name DESC;").to_a
+    end
   end
 
   class Patient

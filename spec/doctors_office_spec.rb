@@ -15,6 +15,16 @@ describe Doctors_office do
       end
     end
 
+    describe 'Doctors_office::Doctor.findBy' do
+      it 'finds a doctor matching the given parameters' do
+        Doctors_office::Doctor.clear_db
+        id = Doctors_office::Doctor.add('John Doe', 'Brain Surgeon').getvalue(0, 0)
+        expect(result = Doctors_office::Doctor.findBy('id', id)).to be_a(Array)
+        expect(result = Doctors_office::Doctor.findBy('name', 'name')).to be_a(Array)
+        expect(result = Doctors_office::Doctor.findBy('type', 'type')).to be_a(Array)
+      end
+    end
+
     describe 'Doctors_office::Doctor.delete' do
       it 'deletes a doctor from the database' do
         id = Doctors_office::Doctor.add('John Doe', 'Brain Surgeon').getvalue(0, 0)
