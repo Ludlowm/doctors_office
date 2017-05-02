@@ -15,13 +15,13 @@ describe Doctors_office do
       end
     end
 
-    describe 'Doctors_office::Doctor.findBy' do
+    describe 'Doctors_office::Doctor.find_by' do
       it 'finds a doctor matching the given parameters' do
         Doctors_office::Doctor.clear_db
         id = Doctors_office::Doctor.add('John Doe', 'Brain Surgeon').getvalue(0, 0)
-        expect(result = Doctors_office::Doctor.findBy('id', id)).to be_a(Array)
-        expect(result = Doctors_office::Doctor.findBy('name', 'name')).to be_a(Array)
-        expect(result = Doctors_office::Doctor.findBy('type', 'type')).to be_a(Array)
+        expect(result = Doctors_office::Doctor.find_by('id', id)).to be_a(Array)
+        expect(result = Doctors_office::Doctor.find_by('name', 'name')).to be_a(Array)
+        expect(result = Doctors_office::Doctor.find_by('type', 'type')).to be_a(Array)
       end
     end
 
@@ -38,15 +38,24 @@ describe Doctors_office do
 
     describe 'Doctors_office::Patient.add' do
       it 'Adds a new patient to the database' do
-        expect(Doctors_office::Patient.add('Jane Doe', 6, 5039904423)[0]["id"]).to match(UUID_MATCHER)
+        expect(Doctors_office::Patient.add('Jane Doe', Time.now, 5039904423)[0]["id"]).to match(UUID_MATCHER)
       end
     end
 
     describe 'Doctors_office::Patient.delete' do
       it 'deletes a patient from the database' do
-        id = Doctors_office::Patient.add('Jane Doe', 23, 5039997788).getvalue(0, 0)
+        id = Doctors_office::Patient.add('Jane Doe', Time.now, 5039997788).getvalue(0, 0)
         result = Doctors_office::Patient.delete(id)
         expect(result.result_status).to eq(PG::PGRES_COMMAND_OK)
+      end
+    end
+
+    describe 'Doctors_office::Patient.find_by' do
+      it 'finds a patient matching the given parameters' do
+        Doctors_office::Patient.clear_db
+        id = Doctors_office::Patient.add('Jane Doe', Time.now, 5033338877).getvalue(0, 0)
+        expect(result = Doctors_office::Patient.find_by('id', id)).to be_a(Array)
+        expect(result = Doctors_office::Patient.find_by('name', 'name')).to be_a(Array)
       end
     end
 

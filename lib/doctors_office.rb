@@ -19,18 +19,30 @@ module Doctors_office
       DB.exec("DELETE FROM doctors WHERE id ='#{id}';")
     end
 
-    def self.findBy(field, value)
+    def self.find_by(field, value)
       DB.exec("SELECT * FROM doctors WHERE #{field} = '#{value}' ORDER BY name DESC;").to_a
     end
   end
 
   class Patient
-    def self.add(name, age, phone)
-      DB.exec("INSERT INTO patients VALUES (uuid_generate_v4(), '#{name}', '#{age}', #{phone}) RETURNING id;")
+    def self.add(name, birthday, phone)
+      DB.exec("INSERT INTO patients VALUES (uuid_generate_v4(), '#{name}', '#{birthday}', #{phone}) RETURNING id;")
     end
 
     def self.delete(id)
       DB.exec("DELETE FROM patients WHERE id ='#{id}';")
+    end
+
+    def self.clear_db
+      DB.exec("DELETE FROM patients *;")
+    end
+
+    def self.show_doctor
+
+    end
+
+    def self.find_by(field, value)
+      DB.exec("SELECT * FROM patients WHERE #{field} = '#{value}' ORDER BY name DESC;").to_a
     end
 
   end
