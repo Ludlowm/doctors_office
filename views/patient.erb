@@ -6,11 +6,21 @@
 
 <% if  @patient[0]["doctor_id"] == nil%>
 <h2>Add Doctor:</h2>
-<ul>
+<form id="select-doctor" action="/add-doctor" method="post">
+  <input type="hidden" id='patient-id' value='<%= @id %>'>
   <% Doctors_office::Doctor.all.to_a.each do |doctor| %>
-      <%= "<li><a href='/doctors/#{doctor['id']}'>#{doctor['name']}</a></li>" %>
-   <% end %>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="doctors" id="doctors" value="<%= doctor['id'] %>" checked>
+        <%= doctor['name'] %>
+      </label>
+    </div>
+  <% end %>
+  <button type="submit" class="btn-info btn">Add Doctor</button>
+</form>
 </ul>
+<% else %>
+<h2><%= Doctors_office::Doctor.find_by('id', @patient[0]["doctor_id"])[0]['name'] %></h2>
 <% end %>
 
 

@@ -35,8 +35,8 @@ module Doctors_office
   end
 
   class Patient
-    def self.add(name, birthday, phone)
-      DB.exec("INSERT INTO patients VALUES (uuid_generate_v4(), '#{name}', '#{birthday}', #{phone}) RETURNING id;")
+    def self.add(name, phone, birthday)
+      DB.exec("INSERT INTO patients VALUES (uuid_generate_v4(), '#{name}', #{phone}, '#{birthday}') RETURNING id;")
     end
 
     def self.delete(id)
@@ -51,9 +51,8 @@ module Doctors_office
       DB.exec("SELECT * FROM patients;")
     end
 
-    def self.add_doctor(patient_name, doctor_name)
-      doctor_id = Doctors_office::Doctor.find_by("name", doctor_name)[0]["id"]
-      DB.exec("UPDATE patients SET doctor_id = '#{doctor_id}' WHERE name = '#{patient_name}'")
+    def self.add_doctor(patient_id, doctor_id)
+      DB.exec("UPDATE patients SET doctor_id = '#{doctor_id}' WHERE id = '#{patient_id}'")
     end
 
     def self.find_by(field, value)
