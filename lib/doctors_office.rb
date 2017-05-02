@@ -11,6 +11,11 @@ module Doctors_office
       DB.exec("INSERT INTO doctors VALUES (uuid_generate_v4(), '#{name}', '#{type}') RETURNING id;")
     end
 
+    def self.delete(id)
+      DB.exec("DELETE FROM doctors WHERE id ='#{id}';")
+    end
+
+
   end
 
   class Patient
