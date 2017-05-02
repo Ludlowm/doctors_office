@@ -37,8 +37,9 @@ module Doctors_office
       DB.exec("DELETE FROM patients *;")
     end
 
-    def self.show_doctor
-
+    def self.add_doctor(patient_name, doctor_name)
+      doctor_id = Doctors_office::Doctor.find_by("name", doctor_name)[0]["id"]
+      DB.exec("UPDATE patients SET doctor_id = '#{doctor_id}' WHERE name = '#{patient_name}'")
     end
 
     def self.find_by(field, value)

@@ -59,6 +59,17 @@ describe Doctors_office do
       end
     end
 
+    describe 'Doctors_office::Patient.add_doctor' do
+      it 'adds a doctor id to as a foreign key' do
+        Doctors_office::Patient.clear_db
+        Doctors_office::Patient.add('Jane Doe', Time.now, 5033338877).getvalue(0, 0)
+        Doctors_office::Doctor.add('John Doe', 'Brain Surgeon').getvalue(0, 0)
+        doctor_id = Doctors_office::Doctor.find_by("name", "John Doe")[0]["id"]
+        Doctors_office::Patient.add_doctor("Jane Doe", "John Doe")
+        expect(Doctors_office::Patient.find_by("name", "Jane Doe")[0]["doctor_id"]).to eq(doctor_id)
+      end
+    end
+
   end
 
 end
